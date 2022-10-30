@@ -1,0 +1,15 @@
+box {
+    background-color: rgb(241, 160, 131);
+    border-radius: 1rem;
+    width: 40%;
+    background-size: contain;
+    height: 350px;
+    margin: 0 auto;
+    display: grid;
+    align-items: center;
+    text-align: center;
+}
+
+form {
+    color: rgb(63, 19, 3);
+}

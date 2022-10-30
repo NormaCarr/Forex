@@ -1,0 +1,15 @@
+{% extends "base.html" %} {% block body %}
+<box>
+
+    {%if not valC %}
+    <a><button type="button" class="btn  btn-info">{{result[0]}} : {{result[1]}}</button></a> 
+    <a><button type="button" class="btn  btn-info">{{result[2]}} : {{result[3]}}</button></a> 
+    {% else %}
+    <a><button type="button" id="convFrom">Converting from:{{valC[0]}}</button></a>
+    <a><button type="button" id="convTo">Converting to:{{valC[1]}}</button></a> 
+    <a><button id="convTo">The result is:  {{result[0]}}  {{result[1]}}</button></a> 
+    {% endif %}
+    <a href="/" target="_parent"><button type="submit">Home</button></a>
+</box>
+
+{% endblock %}
