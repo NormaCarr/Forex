@@ -4,43 +4,33 @@ from flask import request
 currencyR = CurrencyRates()
 currencyC = CurrencyCodes()
 
-"""Initialize a list with the valid codes"""
-listCurrecyCodes = ["EUR","Euro", "IDR", "BGN","ILS",
-                    "GBP", "DKK", "CAD", "JPY", "HUF",
-                    "RON", "MYR", "SEK", "SGD", "HKD",
-                    "AUD", "CHF", "KRW", "CNY", "TRY",
-                    "HRK", "NZD", "THB", "USD", "NOK",
-                    "RUB", "INR", "MXN", "CZK", "BRL",
-                    "PLN", "PHP", "ZAR"]
-
-
-class currency():
+class currency:
          
-      def verifyCurrency(this,values):
+      def verifyCurrency(self,values):
            """Verify the currency and return a tupla with the codes validation and the codes simbols"""    
-           
-           cv_f= values[0]
-           cv_t=values[1]
-    
-           if cv_t in listCurrecyCodes and cv_f in listCurrecyCodes:
+           curCodes=CurrencyCodes()
+           (convFrom,convTo,amount)=values
+        
+           cv_f=curCodes.get_currency_name(convFrom)
+           cv_t=curCodes.get_currency_name(convTo)
+           if cv_t and cv_f :
                 return "valid_codes"
            else:
-              if cv_t not in listCurrecyCodes and cv_f not in listCurrecyCodes:
-                    return "Invalid from",cv_f,"Invalid to",cv_t
-              elif cv_f not in listCurrecyCodes:   
-                    
-                    return "Invalid from",cv_f,"valid to",cv_t
+              if not cv_t and not cv_f:
+                    return "Invalid from",convFrom,"Invalid to",convTo
+              elif not cv_f :   
+                    return "Invalid from",convFrom,"valid to",cv_t
               else:
-                        
-                    return "valid from",cv_f,"Invalid to",cv_t
+                    return "valid from",cv_f,"Invalid to",convTo
 
     
 
-      def convCurrency(this,valCurrency):
-            """Convert the currency"""      
+      def convCurrency(self,valCurrency):
+            """Convert the currency"""   
+            (convFrom,convTo,amount)=valCurrency   
             c = CurrencyCodes()
-            currencyC=c.get_symbol(valCurrency[1])
-            converted=currencyR.convert(valCurrency[0],valCurrency[1],int(valCurrency[2]))
+            currencyC=c.get_symbol(convTo)
+            converted=currencyR.convert(convFrom,convTo,int(amount))
             converted=round(converted,4)
             return currencyC,converted
                
